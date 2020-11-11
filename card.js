@@ -13,27 +13,26 @@ function Card(suit, rank){
 		},
 		symbol: {
 			get: function(){
-				return Card.suitList[this.suit] + Card.rankList[this.rank];
+				return Card.Suit[this.suit] + Card.Rank[this.rank];
 			}
 		}
 	});
 }
 
-Card.suitList = { club: "♣", spade: "♠", dia: "◆", hearts: "♥" };
-Card.rankList = {
+Card.Suit = { club: "♣", spade: "♠", dia: "◆", hearts: "♥" };
+Card.Rank = {
 	Two: "2", Three: "3", Four: "4", Five: "5", Six: "6", Seven: "7",
 	Eight: "8", Nine: "9", Ten: "10", Jack: "J", Queen: "Q", King: "K", Ace: "A"
 };
 
 function Deck(){
 	var cards = this.cards = [];
-	var u_card = 0;
-	for(var i in Card.suitList){
-		for(var j in Card.rankList){
-			cards.push(new card(i,j);
+	for(var s in Card.Suit){
+		for(var r in Card.Rank){
+			cards.push(new Card(s,r));
 		}
-	} 
-};
+	}
+}
 
 Deck.prototype.shuffle = function(){
 	var a = this.cards;
@@ -52,6 +51,7 @@ Deck.prototype.deal = function(playerList,n){
 	var a= tihs.u_Card;
 	for(var i = a; i < a+n; i++){
 		for(var j in game.playerList){
-			i,thisDeck.push(u_Card[i];
+			i,thisDeck.push(u_Card[i]);
+			}
 	}
 };
