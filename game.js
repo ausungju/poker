@@ -32,78 +32,18 @@ var categoriesTest = function(a){
 		getString.push(getDeck[i].substr(0,1));
 		getInt.push(getDeck[i].substr(1));
 	}getSwap.sort();getInt.sort();getString.sort();
-	
-	console.log(getSwap.join());
-	
-	//투페어
-	var twoCard = function(n= "0"){
-		var c = getInt[0];
-		if((/2,2/).test(getInt.join()) == true){
-			if(n == "2") return;
-			sum += "2two";
-			c++;
-		}else if((/3,3/).test(getInt.join()) == true){
-			if(n == "3") return;
-			sum += "3two";
-			c++;
-		}else if((/4,4/).test(getInt.join()) == true){
-			if(n == "4") return;
-			sum += "4two";
-			c++;
-		}else if((/5,5/).test(getInt.join()) == true){
-			if(n == "5") return;
-			sum += "5two";
-			c++;
-		}else if((/6,6/).test(getInt.join()) == true){
-			if(n == "6") return;
-			sum += "6two";
-			c++;
-		}else if((/7,7/).test(getInt.join()) == true){
-			if(n == "7") return;
-			sum += "7two";
-			c++;
-		}else if((/8,8/).test(getInt.join()) == true){
-			if(n == "8") return;
-			sum += "8two";
-			c++;
-		}else if((/9,9/).test(getInt.join()) == true){
-			if(n == "9") return;
-			sum += "9two";
-			c++;
-		}else if((/10,10/).test(getInt.join()) == true){
-			if(n == "10") return;
-			sum += "10two";
-			c++;
-		}else if((/J,J/).test(getInt.join()) == true){
-			if(n == "J") return;
-			sum += "Jtwo";
-			c++;
-		}else if((/Q,Q/).test(getInt.join()) == true){
-			if(n == "Q") return;
-			sum += "Qtwo";
-			c++;
-		}else if((/K,K/).test(getInt.join()) == true){
-			if(n == "K") return;
-			sum += "Ktwo";
-			c++;
-		}else if((/A,A/).test(getInt.join()) == true){
-			if(n == "A") return;
-			sum += "Atwo";
-			c++;
-		}
-	}
-	
+		
+	// ◆, ♠, ♣, ♥
 	//  감별
-	var HighCard = function(){
+	var HighSuit = function(){
 		var c = getInt[0];
 		if(c == 10){
-			return getSwap[0][1]+c;
+			return getSwap[0][1];
 		}else{
-			return getSwap[6][1]+getInt[6];
+			return getSwap[6][1];
 		}
 	}
-	
-	var HighInt = function(){
+	var HighRank = function(){
 		var c = getInt[0];
 		if(c == 10){
 			return c;
@@ -112,9 +52,29 @@ var categoriesTest = function(a){
 		}
 	}
 
-	console.log(HighCard());
-	
-	
+
+	var getCheck = function(a, n){
+		var l= getSwap.join().search(a);
+		var spot = ["♠", "◆", "♥", "♣"];
+		var checkSuit = "";
+		var nl;
+		
+		console.log(l);
+		
+		if ( (l % 3) == 0 ) nl = l / 3;
+		else nl = ( l -1 ) / 3; 
+		for(var i in spot){
+			for( var j = nl; j< nl+2; j++){
+				if(getSwap[j][1] == spot[i]){
+					checkSuit = spot[i];
+				}
+			}
+			if( checkSuit == spot[i] ) break;
+		}
+		sum += checkSuit;
+	}
+
+
 	//포카드
 	if((/2,2,2,2/).test(getInt.join()) == true){
 		return "2four";
@@ -144,33 +104,50 @@ var categoriesTest = function(a){
 		return "Afour";
 	}
 	
-	//스트레이트
-	if((/10,9,K,Q,J/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/10,8,9,Q,J/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/10,7,8,9,J/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/10,6,7,8,9/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/5,6,7,8,9/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/4,5,6,7,8/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/3,4,5,6,7/).test(getInt.join()) == true){
-		sum += "straight";
-	}else if((/2,3,4,5,6/).test(getInt.join()) == true){
-		sum += "straight";
-	}
-	
-	//백스트레이트
-	if((/2,3,4,5,A/).test(getInt.join()) == true){
-		sum += "Backstraight";
-	}
-	
-	//마운틴
-	if((/10,A,K,Q,J/).test(getInt.join()) == true){
-		sum += "mountain";
+	//투페어
+	var twoCard = function(n= "0"){
+		
+		if((/A.,A./).test(getSwap.join()) == true){
+			if(n == "A") return;
+			getCheck(/A.,A./,2);
+			sum += "Atwo";
+		}else if((/K.,K./).test(getSwap.join()) == true){
+			if(n == "K") return;
+			sum += "Ktwo";
+		}else if((/Q.,Q./).test(getSwap.join()) == true){
+			if(n == "Q") return;
+			sum += "Qtwo";
+		}else if((/J.,J./).test(getSwap.join()) == true){
+			if(n == "J") return;
+			sum += "Jtwo";
+		}else if((/10.,10./).test(getSwap.join()) == true){
+			if(n == "10") return;
+			sum += "10two";
+		}else if((/9.,9./).test(getSwap.join()) == true){
+			if(n == "9") return;
+			sum += "9two";
+		}else if((/8.,8./).test(getSwap.join()) == true){
+			if(n == "8") return;
+			sum += "8two";
+		}else if((/7.,7./).test(getSwap.join()) == true){
+			if(n == "7") return;
+			sum += "7two";
+		}else if((/6.,6./).test(getSwap.join()) == true){
+			if(n == "6") return;
+			sum += "6two";
+		}else if((/5.,5./).test(getSwap.join()) == true){
+			if(n == "5") return;
+			sum += "5two";
+		}else if((/4.,4./).test(getSwap.join()) == true){
+			if(n == "4") return;
+			sum += "4two";
+		}else if((/3.,3./).test(getSwap.join()) == true){
+			if(n == "3") return;
+			sum += "3two";
+		}else if((/2.,2./).test(getSwap.join()) == true){
+			if(n == "2") return;
+			sum += "2two";
+		}
 	}
 	
 	//트리플 
@@ -217,6 +194,36 @@ var categoriesTest = function(a){
 		twoCard();
 	}
 		
+	//스트레이트
+	if((/10,9,K,Q,J/).test(getInt.join()) == true){
+		sum += "Kstraight";
+	}else if((/10,8,9,Q,J/).test(getInt.join()) == true){
+		sum += "Qstraight";
+	}else if((/10,7,8,9,J/).test(getInt.join()) == true){
+		sum += "Jstraight";
+	}else if((/10,6,7,8,9/).test(getInt.join()) == true){
+		sum += "10straight";
+	}else if((/5,6,7,8,9/).test(getInt.join()) == true){
+		sum += "9straight";
+	}else if((/4,5,6,7,8/).test(getInt.join()) == true){
+		sum += "8straight";
+	}else if((/3,4,5,6,7/).test(getInt.join()) == true){
+		sum += "7straight";
+	}else if((/2,3,4,5,6/).test(getInt.join()) == true){
+		sum += "6straight";
+	}
+	
+	//백스트레이트
+	if((/2,3,4,5,A/).test(getInt.join()) == true){
+		sum += "Backstraight";
+	}
+	
+	//마운틴
+	if((/10,A,K,Q,J/).test(getInt.join()) == true){
+		sum += "mountain";
+	}
+	
+	
 	//플러쉬
 	if((/♥,♥,♥,♥,♥/).test(getString) == true){
 		sum += "♥flush";
@@ -228,15 +235,14 @@ var categoriesTest = function(a){
 		sum += "♣flush";
 	}
 	
-	result = HighInt() +sum;
-	return result;
+
+	return sum;
 };
 	
 var deck = (new Deck()).shuffle();
 // 카드 덱에서 5장을 나누어준다
 
-var nua = ["◆2","♠9","♠4","♠A","♠5","♠8","♠6"];
-console.log(nua.sort());
+var nua = ["◆A","◆10","♠9","♠4","♣J","♣A","♠2"];
 console.log(categoriesTest(nua));
 
 
