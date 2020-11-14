@@ -28,13 +28,25 @@ var categoriesTest = function(a){
 		getSwap.push(getDeck[i].substr(1)+getDeck[i].substr(0,1));
 		getString.push(getDeck[i].substr(0,1));
 		getInt.push(getDeck[i].substr(1));
-	}getSwap.sort();getInt.sort();getString.sort();
-		
+	}getSwap.sort();getInt.sort();getString.sort();getDeck.sort();
 	// ◆, ♠, ♣, ♥
 	//  감별
 	
-
-
+	var getRem = function(reg,get,list){
+			var matchingCard = get.join("").match(reg);
+			for(var i in list){
+				for(var j = 0; j <= matchingCard[0].length; j++){
+						if(matchingCard[0][j] == list[i]) {
+							sum += list[i];
+							return;
+						}
+				}
+			}
+		}
+	
+	
+	
+	//페어 카드
 	var checkCard = function(m = 4,n =["0"]){
 		var k = 0;
 		var s = "";
@@ -48,20 +60,7 @@ var categoriesTest = function(a){
 				case 2: return "Two";
 				case 1: return "one";
 			}
-		}
-		
-		
-		
-		
-		var getSuit = function(){
-			if(sum != "") return;
-			for(var i in suitList){
-				
-			}
-		}
-		
-		
-		
+		}	
 		
 		for(var i in rankList){
 			var a = 0;
@@ -73,6 +72,7 @@ var categoriesTest = function(a){
 			console.log
 			var reg = new RegExp( (rankList[i]+".").repeat(m) );
 			if(reg.test(getSwap.join("")) ==true){
+				getRem(reg,getSwap,suitList);
 				k++;
 				if(m > 2){
 					n.push(rankList[i]);
@@ -92,23 +92,21 @@ var categoriesTest = function(a){
 		}
 		if(k == 0) {
 			--m;
-			console.log(m);
 			if(m > 0) checkCard(m,n);
 		}
 	}
 	
+	//마운틴
+	if((/10.+A.J.K.Q./).test(getSwap.join("")) == true){
+		for(var i in getSwap){
+			if(getSwap[i][0] == "A") sum += getSwap[i][1];
+		}
+		sum += "mountain";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	checkCard();
 
+	
+	
 	//스트레이트
 	if((/10,9,K,Q,J/).test(getInt.join()) == true){
 		sum += "Kstraight";
@@ -133,23 +131,20 @@ var categoriesTest = function(a){
 		sum += "Backstraight";
 	}
 	
-	//마운틴
-	if((/10,A,K,Q,J/).test(getInt.join()) == true){
-		sum += "mountain";
-	}
+	console.log(getSwap.join(""));
 	
+	
+	checkCard();
 	
 	//플러쉬
-	if((/♥,♥,♥,♥,♥/).test(getString) == true){
-		sum += "♥flush";
-	}else if((/◆,◆,◆,◆,◆/).test(getString) == true){
-		sum += "◆flush";
-	}else if((/♠,♠,♠,♠,♠/).test(getString) == true){
-		sum += "♠flush";
-	}else if((/♣,♣,♣,♣,♣/).test(getString) == true){
-		sum += "♣flush";
+	for(var i in suitList){
+		var reg = new RegExp( (suitList[i] + ".+").repeat(5) );
+		if(reg.test(getDeck.join("")) == true){
+			getRem(reg,getDeck,rankList);
+			sum += suitList[i]+"flush";
+		}
 	}
-	
+
 
 	return sum;
 };
@@ -157,7 +152,7 @@ var categoriesTest = function(a){
 var deck = (new Deck()).shuffle();
 // 카드 덱에서 5장을 나누어준다
 
-var nua = ["◆1","◆3","♣5","♣6","♣8","♣10","♠Q"];
+var nua = ["◆10","◆A","♣K","♣Q","♣J","♠2","♣3"];
 console.log(categoriesTest(nua));
 
 
