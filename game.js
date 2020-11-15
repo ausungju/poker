@@ -17,37 +17,31 @@ var categoriesTest = function(a){
 	var suitList = ["♠", "◆", "♥", "♣"];
 	var rankList = ["A","K","Q","J","10","9","8","7","6","5","4","3","2"]
 	var result = "";
-	var sum = ""
+	var sum = [];
 	var getDeck = a;
-
-	var getString =[];
 	var getSwap =[];
-	var getInt = []
-	
+
 	for(var i = 0; i < getDeck.length; i++){
 		getSwap.push(getDeck[i].substr(1)+getDeck[i].substr(0,1));
-		getString.push(getDeck[i].substr(0,1));
-		getInt.push(getDeck[i].substr(1));
-	}getSwap.sort();getInt.sort();getString.sort();getDeck.sort();
-	// ◆, ♠, ♣, ♥
-	//  감별
+	}getSwap.sort();getDeck.sort();
 	
+
+	//감별
 	var getRem = function(reg,get,list){
 			var matchingCard = get.join("").match(reg);
 			for(var i in list){
 				for(var j = 0; j <= matchingCard[0].length; j++){
 						if(matchingCard[0][j] == list[i]) {
-							sum += list[i];
-							return;
+							return list[i];
 						}
 				}
 			}
 		}
 	
 	
-	
 	//페어 카드
 	var checkCard = function(m = 4,n =["0"]){
+		var inSum = "";
 		var k = 0;
 		var s = "";
 		var n = this.n = n;
@@ -72,20 +66,23 @@ var categoriesTest = function(a){
 			console.log
 			var reg = new RegExp( (rankList[i]+".").repeat(m) );
 			if(reg.test(getSwap.join("")) ==true){
-				getRem(reg,getSwap,suitList);
+				inSum = getRem(reg,getSwap,suitList);
 				k++;
 				if(m > 2){
 					n.push(rankList[i]);
-					sum += (rankList[i]+getSpot());
+					inSum += (rankList[i]+getSpot());
+					sum.push(inSum);
 					m--;
 					checkCard(m,n);
 					break;
 				}else if(m == 2){
 					n.push(rankList[i]);	
-					sum += (rankList[i]+getSpot());
+					inSum += (rankList[i]+getSpot());
+					sum.push(inSum);
 					checkCard(m,n);
 				}else if(m == 1){
-					sum += (rankList[i]+getSpot());
+					inSum += (rankList[i]+getSpot());
+					sum.push(inSum);
 					return;
 				}else return;
 			}
@@ -98,61 +95,107 @@ var categoriesTest = function(a){
 	
 	//마운틴
 	if((/10.+A.J.K.Q./).test(getSwap.join("")) == true){
+		var inSum = "";
 		for(var i in getSwap){
-			if(getSwap[i][0] == "A") sum += getSwap[i][1];
+			if(getSwap[i][0] == "A") inSum = getSwap[i][1];
 		}
-		sum += "mountain";
+		inSum += "mountain";
+		sum.push(inSum);
 	}
 	
-
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//스트레이트의 Rank 출력이 제대로 안나옴 수정바람
 	
 	//스트레이트
-	if((/10,9,K,Q,J/).test(getInt.join()) == true){
-		sum += "Kstraight";
-	}else if((/10,8,9,Q,J/).test(getInt.join()) == true){
-		sum += "Qstraight";
-	}else if((/10,7,8,9,J/).test(getInt.join()) == true){
-		sum += "Jstraight";
-	}else if((/10,6,7,8,9/).test(getInt.join()) == true){
-		sum += "10straight";
-	}else if((/5,6,7,8,9/).test(getInt.join()) == true){
-		sum += "9straight";
-	}else if((/4,5,6,7,8/).test(getInt.join()) == true){
-		sum += "8straight";
-	}else if((/3,4,5,6,7/).test(getInt.join()) == true){
-		sum += "7straight";
-	}else if((/2,3,4,5,6/).test(getInt.join()) == true){
-		sum += "6straight";
+	for(var i = 1; i<9; i++){
+		var inSum = "";
+		
+		if(i == 1){
+			var reg = new RegExp(rankList[i+3]+".+"+rankList[i+4]+".+"+rankList[i+2]+".+"+rankList[i+1]+".+"+rankList[i]);
+		}else if(i == 2){
+			var reg = new RegExp(rankList[i+2]+".+"+rankList[i+4]+".+"+rankList[i+3]+".+"+rankList[i+1]+".+"+rankList[i]);
+		}else if(i == 3){
+			var reg = new RegExp(rankList[i+1]+".+"+rankList[i+4]+".+"+rankList[i+3]+".+"+rankList[i+2]+".+"+rankList[i]);
+		}else if(i == 4){
+			var reg = new RegExp(rankList[i]+".+"+rankList[i+4]+".+"+rankList[i+3]+".+"+rankList[i+2]+".+"+rankList[i+1]);
+		}else var reg = new RegExp(rankList[i+4]+".+"+rankList[i+3]+".+"+rankList[i+2]+".+"+rankList[i+1]+".+"+rankList[i]);
+		if(reg.test(getSwap.join("")) == true){
+			console.log(reg);
+			console.log(getSwap.join(""));
+			inSum = getRem(reg,getSwap,suitList) + [i] + "Straight";
+			sum.push(inSum);
+			break;
+		}
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//백스트레이트
-	if((/2,3,4,5,A/).test(getInt.join()) == true){
-		sum += "Backstraight";
+	if((/2.3.4.5.+A./).test(getSwap.join("")) == true){
+		var inSum ="";
+		for(var i in getSwap){
+			if(getSwap[i][0] == "A") {
+				inSum = getSwap[i][1];
+			}
+		}
+		inSum += "Backstraight";
+		sum.push(inSum);
 	}
-	
-	console.log(getSwap.join(""));
+
+	//플러쉬
+	for(var i in suitList){
+		var inSum = "";
+		var reg = new RegExp( (suitList[i] + ".+").repeat(5) );
+		if(reg.test(getDeck.join("")) == true){
+			inSum = suitList[i] + getRem(reg,getDeck,rankList) + "flush";
+			sum.push(inSum);
+		}
+	}
 	
 	
 	checkCard();
 	
-	//플러쉬
-	for(var i in suitList){
-		var reg = new RegExp( (suitList[i] + ".+").repeat(5) );
-		if(reg.test(getDeck.join("")) == true){
-			getRem(reg,getDeck,rankList);
-			sum += suitList[i]+"flush";
-		}
+	if(/.+mountain.+flush/.test(sum)){
+		result = sum[1][0] + "Royal Straight Flush";
+	}if(/.+Straight.+flush/.test(sum)){
+		result = sum[1][0] + "Straight Flush";
+	}if(/.+mountain.+flush/.test(sum)){
+		result = sum[1][0] + "Royal Straight Flush";
 	}
 
-
-	return sum;
+	console.log(sum);
+	return result;
 };
 	
 var deck = (new Deck()).shuffle();
 // 카드 덱에서 5장을 나누어준다
 
-var nua = ["◆10","◆A","♣K","♣Q","♣J","♠2","♣3"];
+var nua = ["♠10","♠9","♠8","♠7","♠6","◆1","♣Q"];
 console.log(categoriesTest(nua));
 
 
