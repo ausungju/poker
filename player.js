@@ -39,8 +39,7 @@ var die = function(Unit){
 
 var you = {name: "my", numOfDie: 0, money: 100000};
 var me = new User(you);
-console.log(me);
-me.save();
+//me.save();
 
 
 
@@ -59,3 +58,22 @@ function saveToFile(fileName, content) {
     a.click();
 };
 
+function openTextFile() {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.accept = "text/plain, text/html, .js"; // 확장자가 xxx, yyy 일때, ".xxx, .yyy"
+    input.onchange = function (event) {
+        processFile(event.target.files[0]);
+    };
+    input.click();
+}
+
+function processFile(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+        output.innerText = reader.result;
+		console.log(file.name);
+    };
+    reader.readAsText(file, /* optional */ "euc-kr");
+}
+hi();
