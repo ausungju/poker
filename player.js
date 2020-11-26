@@ -39,15 +39,16 @@ User.prototype.save = function(){
 	+ this.numOfDie + ", money: " + this.money + "};";
 	saveToFile(fileName, content);
 };
-
 // 새로하기
 function newUser(){
 	var getUserName = prompt("닉네임을 입력하시오","홍길동");
 	// 게임 시작유무 확인
-	if (confirm(getUserName+ "님 \n게임을 시작하시겠습니까?")) {
+	if(getUserName == null);
+	else if (confirm(getUserName+ "님 \n게임을 시작하시겠습니까?")) {
 		user = new User(null,getUserName);	
 		console.log(user);
 		alert("게임을 시작합니다.");
+		newPage();
 	}
 };
 
@@ -65,6 +66,7 @@ function newGame(){
 	else {
 		user = new User(LOAD);
 		alert("게임을 시작합니다.");
+		newPage();
 	}
 };
 
