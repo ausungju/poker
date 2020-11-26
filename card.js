@@ -48,10 +48,9 @@ Deck.prototype.shuffle = function(){
 };
 
 Deck.prototype.deal = function(playerList,n){
-	var a= tihs.u_Card;
 	for(var i = a; i < a+n; i++){
 		for(var j in game.playerList){
-			i,thisDeck.push(u_Card[i]);
+			i,thisDeck.push();
 			}
 	}
 };
