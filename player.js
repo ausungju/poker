@@ -46,9 +46,8 @@ function newUser(){
 	if(getUserName == null);
 	else if (confirm(getUserName+ "님 \n게임을 시작하시겠습니까?")) {
 		user = new User(null,getUserName);	
-		console.log(user);
 		alert("게임을 시작합니다.");
-		newPage();
+		newPage("main");
 	}
 };
 
@@ -66,7 +65,7 @@ function newGame(){
 	else {
 		user = new User(LOAD);
 		alert("게임을 시작합니다.");
-		newPage();
+		newPage("main");
 	}
 };
 
@@ -81,11 +80,8 @@ function openTextFile() {
 			var userName = file.name.match(/.+\./).join().slice(0,-1);
 			
 			if (confirm(userName + "님이 맞습니까?")) { 
-				getFile = file.name;			
-				var newScript = document.createElement("script");
-				newScript.setAttribute("src", getFile);
-				var element = document.head;
-				element.appendChild(newScript);
+				getFile = file.name;
+				createNode("script", "", document.head, ["src", getFile]);
 				output.innerText = userName +"님 환영합니다.";
 				alert(userName + "님의 정보를 불러왔습니다");	
 			}else alert("다시 시도하세요!")
@@ -116,10 +112,7 @@ var die = function(Unit){
 	if(Unit.money < 0) Unit.numOfDie++;
 };
 
-window.onload = function(){
-	// User 데이터 기본값 설정
-	var user = new User;
-};
+window.onload = function(){};
 
 
 
