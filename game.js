@@ -1,17 +1,20 @@
 var newPage = function( get, seed ){
-	var page = document.body;
-	
-	while ( page.firstChild ) {
-		var ppage = page.firstChild
-		if(page.firstChild == ""){
-			console.log("앙ㄴ녕")
+	var page = document.body
+	//var numOfNode = page.childElementCount;
+
+
+	// output 삭제가 안됨
+	for(var i in page.childNodes){
+		if( i%2 == 1 ){
+			//console.log(i);
+			//console.log(page.childNodes[i]);
+			if(i != 1){	
+				//console.log("삿제");
+				page.removeChild(page.childNodes[i])
+			}
 		}
-		console.log(page.firstChild);
-		if(document.body.getAttribute("id") == "default"){
-			continue;
-		}
-		page.removeChild( page.firstChild ); 
 	}
+	
 	switch( get ){
 		case "main" : {
 		createNode( "button", "저장", undefined, [ ["onclick", "user.save()"], ["id", "save"] ] )
@@ -24,7 +27,6 @@ var newPage = function( get, seed ){
 			var List = game.playerList;
 			
 			createNode( "div", game.seed, undefined, [ ["id", "seed"] ] );
-			createNode( "div", game.seed, undefined, [ ["id", "seed"] ] );
 			for(var i in List){
 
 				createNode("div", (List[i].name + ",  Money : " + List[i].money), undefined, [ ["class", ("player")] ] );
@@ -35,6 +37,8 @@ var newPage = function( get, seed ){
 		
 	}
 };
+
+//html 요소 추가
 var createNode = function(tag, textNode, stand = document.body, Attribute = []){
 	var element = document.createElement( tag );
 	var node = document.createTextNode( textNode );
