@@ -81,9 +81,10 @@ function openTextFile() {
 			
 			if (confirm(userName + "님이 맞습니까?")) { 
 				getFile = file.name;
-				createNode("script", "", document.head, ["src", getFile]);
+				createNode("script", "", document.head, [["src", getFile]]);
 				output.innerText = userName +"님 환영합니다.";
 				alert(userName + "님의 정보를 불러왔습니다");	
+				console.log(document.head);
 			}else alert("다시 시도하세요!")
 		}
 	reader.readAsText(file, /* optional */ "euc-kr");
