@@ -1,41 +1,35 @@
 var newPage = function( get, seed ){
-	var page = document.body
-	//var numOfNode = page.childElementCount;
-
-
-	// output 삭제가 안됨
-	for(var i in page.childNodes){
-		if( i%2 == 1 ){
-			//console.log(i);
-			//console.log(page.childNodes[i]);
-			if(i != 1){	
-				//console.log("삿제");
-				page.removeChild(page.childNodes[i])
-			}
-		}
+	var basic = document.getElementById("basic");
+	
+	while ( basic.hasChildNodes() ) { 
+		basic.removeChild( basic.firstChild ); 
 	}
+	
 	
 	switch( get ){
 		case "main" : {
-		createNode( "button", "저장", undefined, [ ["onclick", "user.save()"], ["id", "save"] ] )
-		createNode( "button", "시작", undefined, [ ["onclick", "newPage(\"game\")"], ["id", "start"] ] )
-		createNode("div", (user.name + ",  Money : " + user.money), undefined, [ ["id", ("state")] ] );
-		break;
+			var Home = document.getElementById("home");
+			Home.innerText = "H";
+			createNode( "button", "저장", basic, [ ["onclick", "user.save()"], ["id", "save"] ] )
+			createNode( "button", "시작", basic, [ ["onclick", "newPage(\"game\")"], ["id", "start"] ] )
+			createNode("div", (user.name + ",  Money : " + user.money), basic, [ ["id", ("state")] ] );
+			break;
 		}
 		case "game" : {
 			game = new Game( seed )
 			var List = game.playerList;
 			
-			createNode( "div", game.seed, undefined, [ ["id", "seed"] ] );
+			createNode( "div", game.seed, basic, [ ["id", "seed"] ] );
 			for(var i in List){
 
-				createNode("div", (List[i].name + ",  Money : " + List[i].money), undefined, [ ["class", ("player")] ] );
+				createNode("div", (List[i].name + ",  Money : " + List[i].money), basic, [ ["class", ("player")] ] );
 			}
-			console.log(document.body);
+			
 			break;
 		}
 		
 	}
+	console.log(document.body);
 };
 
 //html 요소 추가
@@ -51,6 +45,12 @@ var createNode = function(tag, textNode, stand = document.body, Attribute = []){
 	stand.appendChild( element );
 };
 	
+function goHome(){
+	if(confirm("메인화면으로 이동합니다"))
+		newPage("main");
+	
+	
+}
 	
 function Game(seed = 5000){
 
