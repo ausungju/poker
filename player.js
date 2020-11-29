@@ -35,7 +35,7 @@ User.prototype.save = function(){
 	}
 
 	var fileName = this.name + ".js"
-	var content = "var " + "LOAD" + " = { name: \"" + this.name + "\", numOfDie: " 
+	var content = "var " + "LOAD" + " = { id = 001, name: \"" + this.name + "\", numOfDie: " 
 	+ this.numOfDie + ", money: " + this.money + "};";
 	saveToFile(fileName, content);
 };
@@ -44,29 +44,18 @@ function newUser(){
 	var getUserName = prompt("닉네임을 입력하시오","홍길동");
 	// 게임 시작유무 확인
 	if(getUserName == null);
-	else if (confirm(getUserName+ "님 \n게임을 시작하시겠습니까?")) {
-		user = new User(null,getUserName);	
-		alert("게임을 시작합니다.");
-		newPage("main");
+	else if (confirm("사용자 이름을 \"" + getUserName+ "\" 으로 지정하시겠습니까?")) {
+		output.innerText = getUserName +"님 환영합니다.";
+		LOAD = new User(null,getUserName);	
+		//alert("게임을 시작합니다.");
+		//newPage("main");
 	}
 };
 
-// 이어하기
 function newGame(){
-	// 받은 데이터의 유무
-	if(document.getElementsByTagName("script").length == 3){
-		alert("불러온 데이터가 없습니다.")
-	}
-	// 받은 데이터가 파산한 테이터인지 확인
-	else if(LOAD.numOfDie > 0){
-		alert(LOAD.name + "님은 이미 파산 하였습니다.")
-	}
-	// 데이터 적용
-	else {
-		user = new User(LOAD);
-		alert("게임을 시작합니다.");
-		newPage("main");
-	}
+	user = new User(LOAD);
+	alert("게임을 시작합니다.");
+	newPage("main");
 };
 
 // 불러오기
@@ -79,16 +68,33 @@ function openTextFile() {
 		reader.onload = function () {
 			var userName = file.name.match(/.+\./).join().slice(0,-1);
 			
-			if (confirm(userName + "님이 맞습니까?")) { 
-				getFile = file.name;
-				createNode("script", "", document.head, [["src", getFile]]);
+			getFile = file.name;
+			createNode("script", "", document.head, [["src", getFile]]);
+			
+			setTimeout(function() {
+			if(typeof LOAD == "undefined"){
+				alert("잘못된 파일입니다.")
+			}
+			// 받은 데이터가 알맞은 데이터인지 확인
+			else if(LOAD.id != 001 || typeof LOAD == "undefined"){
+				alert("잘못된 파일입니다.");
+			}
+			// 받은 데이터가 파산한 테이터인지 확인
+			else if(LOAD.numOfDie > 0){
+				alert(LOAD.name + "님은 이미 파산 하였습니다.")
+			}
+
+			else if (confirm(userName + "님이 맞습니까?")) { 
+				
 				output.innerText = userName +"님 환영합니다.";
 				alert(userName + "님의 정보를 불러왔습니다");	
 				console.log(document.head);
 			}else alert("다시 시도하세요!")
+			
+			}, 10);
 		}
-	reader.readAsText(file, /* optional */ "euc-kr");
-	}
+		reader.readAsText(file, /* optional */ "euc-kr");
+	};
 	
 	var input = document.createElement("input");
 	input.type = "file";
