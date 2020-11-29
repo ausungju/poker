@@ -16,14 +16,16 @@
   <body>
 	<div id = "default">
 		<div id = "clock" style = "color:gray;">00:00</div>
-		<div id = "home">Home</div>
+		<div id = "home" onclick = "goHome()"></div>
 	</div>
-	<div id = "btn">
-		<button onclick="newUser()">새로하기</button>
-		<button onclick="newGame()">이어하기</button>
-		<button onclick="openTextFile()">불러오기</button>
+	<div id = "basic">
+		<div id = "btn">
+			<button onclick = "newGame()">입장하기</button>
+			<button onclick = "newUser()">새로하기</button>
+			<button onclick = "openTextFile()">불러오기</button>
+		</div>
+		<div id="output">...</div>
 	</div>
-	<div id="output">...</div>
 
   </body>
   
