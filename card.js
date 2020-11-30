@@ -26,6 +26,7 @@ Card.Rank = {
 };
 
 function Deck(){
+	var uingCard = 0;
 	var cards = this.cards = [];
 	for(var s in Card.Suit){
 		for(var r in Card.Rank){
@@ -47,10 +48,11 @@ Deck.prototype.shuffle = function(){
 	return this;
 };
 
-Deck.prototype.deal = function(playerList,n){
-	for(var i = a; i < a+n; i++){
+Deck.prototype.deal = function(game, n = 1){
+	for(var i = 0; i>n; i++){
 		for(var j in game.playerList){
-			i,thisDeck.push();
-			}
+			playerList[j].thisDeck.push(this.cards[this.uingCard]);
+			uingCard++;
+		}
 	}
 };
