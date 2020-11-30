@@ -11,7 +11,7 @@ window.onload = function(){
 		var minutes = date.getMinutes();
 		var seconds = date.getSeconds();
 
-		clockTarget.innerText = `${month+1}월 ${clockDate}일 ${week[day]}요일` + 
+		clockTarget.innerText = `${month+1}월 ${clockDate}일 ${week[day]}요일` + " "+
 		`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes }`  : minutes }:${seconds < 10 ? `0${seconds }`  : seconds }`;
 	}
 
