@@ -220,4 +220,4 @@ var deck = (new Deck()).shuffle();
 // 카드 덱에서 5장을 나누어준다
 
 var nua = [deck.cards[0].symbol,deck.cards[1].symbol,deck.cards[2].symbol,deck.cards[3].symbol,deck.cards[4].symbol,deck.cards[5].symbol,deck.cards[6].symbol];
-console.log(categoriesTest(nua));
+console.log(categoriesTest(nua).join(", "));
