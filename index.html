@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 
 <html lang ="ko">
+	<head>
+	
+		<meta charset = "UTF-8">
+		<title> Poker </title>
+		<script src = "card.js"></script>
+		<script src = "game.js"></script>
+		<script src = "player.js"></script>
+		<script src = "timer.js"></script>
+		<script src = "Rank_of_Card.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+	
+	</head>
   
-  <head>
-  
-    <meta charset = "UTF-8">
-    <title> Poker </title>
-	<script src = "card.js"></script>
-    <script src = "game.js"></script>
-    <script src = "player.js"></script>
-	<script src = "timer.js"></script>
-	<script src = "Rank_of_Card.js"></script>
-  </head>
-  
-  <body>
-	<div id = "default">
-		<div id = "clock" style = "color:gray;">00:00</div>
-		<div id = "home" onclick = "goHome()"></div>
-	</div>
-	<div id = "basic">
-		<div id = "btn">
-			<button onclick = "newGame()">입장하기</button>
-			<button onclick = "newUser()">새로하기</button>
-			<button onclick = "openTextFile()">불러오기</button>
-		</div>
-		<div id="output">...</div>
-	</div>
+	<body>
 
-  </body>
+		<div id = "header">
+			<div id = "clock" style = "color:gray;">00:00</div>
+			<div id = "home" onclick = "goHome()">H</div>
+		</div>
+
+		<div id = "section">
+			<div id = "btn">
+				<button onclick = "newGame()">입장하기</button>
+				<button onclick = "newUser()">새로하기</button>
+				<button onclick = "openTextFile()">불러오기</button>
+			</div>
+			
+			<div id="output">...</div>
+		</div>
+		<div id = wrap>
+			<div id = "side_left">a</div>
+			<div id = "contents">b</div>
+			<div id = "side_right">c</div>
+		</div>
+	</body>
   
 </html>
